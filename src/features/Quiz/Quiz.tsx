@@ -6,7 +6,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Controller, Swiper as BaseSwier } from 'swiper';
 
 import 'swiper/css';
-import { Box } from '@mui/material';
+import { Box, CircularProgress } from '@mui/material';
 import { useEffect, useState } from 'react';
 import QuizResult from '@/components/QuizResult/QuizResult';
 
@@ -63,6 +63,14 @@ const Quiz = () => {
     );
   };
 
+  const renderLoading = () => {
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center">
+        <CircularProgress />
+      </Box>
+    );
+  };
+
   useEffect(() => {
     if (!controlledSwiper) {
       return;
@@ -81,7 +89,7 @@ const Quiz = () => {
       marginTop={5}
       marginX={'auto'}
     >
-      {state.matches('idle') && <div>Loading...</div>}
+      {state.matches('idle') && renderLoading()}
       {['reading', 'result'].some(state.matches) && renderQuestions()}
       {state.matches('checking') && <div>Checking...</div>}
       {state.matches('showingResults') && renderQuizResult()}
